@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#000000" />
+  <path d="M32 10 L15 44 H22.5 L25.6 37.5 H38.4 L41.5 44 H49 L32 10 Z M28.3 31.5 L32 23.4 L35.7 31.5 Z" fill="#ffffff" />
+  <path d="M23 34.5 C26.5 31.5, 30 32, 32 33.5 C34 32, 37.5 31.5, 41 34.5 C37.5 37.8, 34 38, 32 36.2 C30 38, 26.5 37.8, 23 34.5 Z" fill="#000000" stroke="#ffffff" stroke-width="1.6" stroke-linejoin="round" />
+  <text x="32" y="56" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="8.5" font-weight="700" letter-spacing="1.4">
+    AWRA
+  </text>
+</svg>

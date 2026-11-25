@@ -1,0 +1,328 @@
+/* Awra — practice screen
+   Pure black canvas, crisp white primary text, muted gray secondary text.
+   One quiet accent (the online-status dot); everything else stays monochrome. */
+
+.awra-screen {
+  --bg: #000000;
+  --surface: #0a0a0a;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --text: #f5f5f5;
+  --text-muted: #9a9a9a;
+  --text-faint: #6b6b6b;
+  --accent: #35d48c;
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+}
+
+.awra-screen *,
+.awra-screen *::before,
+.awra-screen *::after {
+  box-sizing: border-box;
+}
+
+.awra-screen button {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.awra-screen button:focus-visible,
+.awra-screen [role="radio"]:focus-visible {
+  outline: 1.5px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* ---------- Header ---------- */
+
+.awra-header {
+  padding: 28px clamp(20px, 4vw, 48px) 0;
+}
+
+.awra-profile {
+  position: relative;
+  display: inline-block;
+}
+
+.awra-profile__trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px 4px 2px;
+  border-radius: 999px;
+}
+
+.awra-profile__name {
+  font-size: 15px;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+.awra-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.awra-profile__trigger:hover .awra-icon-btn,
+.awra-rail > .awra-icon-btn:hover {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.awra-icon-btn--lg {
+  width: 44px;
+  height: 44px;
+}
+
+/* ---------- Body layout ---------- */
+
+.awra-body {
+  flex: 1;
+  display: flex;
+  gap: clamp(16px, 5vw, 56px);
+  padding: 28px clamp(20px, 4vw, 48px) 48px;
+}
+
+.awra-rail {
+  position: relative;
+  padding-top: 4px;
+}
+
+.awra-main {
+  flex: 1;
+  max-width: 420px;
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ---------- Popovers (profile + activity) ---------- */
+
+.awra-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 280px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  z-index: 20;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+.awra-popover__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.awra-popover__header--tight {
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.awra-popover__title {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0;
+}
+
+.awra-popover__subtitle {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  margin: 2px 0 0;
+}
+
+.awra-popover__close {
+  margin-left: auto;
+  color: var(--text-faint);
+  padding: 2px;
+}
+
+.awra-popover__close:hover {
+  color: var(--text);
+}
+
+.awra-popover__list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.awra-popover__item {
+  text-align: left;
+  padding: 11px 2px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.awra-popover__item:hover {
+  color: var(--text);
+}
+
+/* ---------- Activity popover contents ---------- */
+
+.activity-stats {
+  margin: 0 0 18px;
+}
+
+.activity-stats__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.activity-stats__row:last-child {
+  border-bottom: none;
+}
+
+.activity-stats__row dt {
+  font-size: 13px;
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+.activity-stats__row dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.activity-graph {
+  height: 64px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.activity-graph__col {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.activity-graph__bar {
+  width: 100%;
+  background: var(--border-strong);
+  border-radius: 3px 3px 1px 1px;
+}
+
+/* ---------- Main practice panel ---------- */
+
+.awra-heading {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.awra-levels {
+  display: flex;
+  gap: 8px;
+}
+
+.awra-level {
+  padding: 8px 16px;
+  font-size: 13.5px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+.awra-level:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.awra-level--active {
+  background: var(--text);
+  color: #000000;
+  border-color: var(--text);
+}
+
+.awra-subtext {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  margin: -6px 0 0;
+  line-height: 1.5;
+}
+
+.awra-online {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.awra-online__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(53, 212, 140, 0.18);
+}
+
+.awra-practice-btn {
+  margin-top: 6px;
+  padding: 15px 0;
+  width: 100%;
+  background: var(--text);
+  color: #000000;
+  border-radius: 12px;
+  font-size: 15.5px;
+  font-weight: 500;
+  transition: opacity 0.15s ease;
+}
+
+.awra-practice-btn:hover {
+  opacity: 0.88;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 480px) {
+  .awra-body {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .awra-main {
+    max-width: none;
+    margin: 0;
+  }
+
+  .awra-popover {
+    width: min(280px, calc(100vw - 40px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .awra-screen * {
+    transition: none !important;
+  }
+}
