@@ -1,16 +1,16 @@
-# React + Vite
+# AWRA (`awra-platform`)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A voice-practice platform built around two aims: helping people build spoken English confidence through 1-on-1 peer conversations and share ideas and information with one another.
 
-Currently, two official plugins are available:
+## Core Aims
+* **Spoken English Confidence:** Practice real-time 1-on-1 peer conversations in a supportive space designed to reduce hesitation and build natural fluency.
+* **Ideas & Information Sharing:** Exchange practical knowledge, perspectives, and everyday insights across conversations and community spaces.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
+* **Frontend:** React + Vite
+* **Tooling & Styling:** JavaScript, CSS, HTML, Oxlint
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Getting Started Locally
+1. Install dependencies:
+   ```bash
+   npm install
