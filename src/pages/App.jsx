@@ -1537,9 +1537,7 @@ export default function App() {
     <div className={`mx-auto flex min-h-dvh max-w-md flex-col bg-black px-5 text-white ${isIdleDashboard ? "pt-6" : "py-6"}`}>
       {!isIdleDashboard && (
         <header className="flex items-center justify-between border-b border-white/15 pb-4">
-          <h1>
-            <img className="h-10 w-10 object-contain" src="/logo.png" alt="AWRA" />
-          </h1>
+          <h1 className="text-xl font-semibold tracking-wide">AWRA</h1>
           {user && callState !== "idle" && (
             <div className="flex items-center gap-2.5">
               {/* TODO: Re-enable guest flow: restore VIP and advisor-position badges in the call header.

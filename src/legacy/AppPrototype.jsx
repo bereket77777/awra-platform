@@ -813,9 +813,7 @@ export default function App() {
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col justify-between bg-black px-6 py-8 text-white">
       <header className="flex items-center justify-between border-b border-white/15 pb-4">
-        <h1>
-          <img className="h-10 w-10 object-contain" src="/logo.png" alt="AWRA" />
-        </h1>
+        <h1 className="text-xl font-semibold tracking-wide">AWRA</h1>
         {user && (
           <div className="flex items-center gap-3">
             <span className="max-w-[140px] truncate text-xs text-white/60">

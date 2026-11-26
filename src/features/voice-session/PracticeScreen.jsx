@@ -68,7 +68,27 @@ function CloseIcon() {
 
 function AwraBigLogo() {
   return (
-    <img className="awra-big-logo" src="/logo.png" alt="AWRA" />
+    <svg className="awra-big-logo" viewBox="0 0 320 120" fill="none" aria-hidden="true">
+      <g fill="none" stroke="currentColor" strokeLinecap="round">
+        <path d="M12 55v36m296-36v36M18 111h284" strokeWidth="0.8" opacity="0.22" />
+        <path d="M23 104h274" strokeWidth="0.6" opacity="0.18" />
+      </g>
+      <g fill="currentColor">
+        <path d="M20 101 44 40h15L42 101Z" />
+        <path d="M51 40h15l25 61H73Z" />
+        <path d="m38 78 36 0 7 12-49 0Z" />
+        <path d="m29 39 5-21 9 10 8-17 8 17 9-10 5 21Z" />
+        <g transform="translate(220 0)">
+          <path d="M20 101 44 40h15L42 101Z" />
+          <path d="M51 40h15l25 61H73Z" />
+          <path d="m38 78 36 0 7 12-49 0Z" />
+        </g>
+      </g>
+      <g fill="none" stroke="currentColor" strokeLinecap="square" strokeLinejoin="miter">
+        <path d="m101 49 12 52 18-34 18 34 12-52" strokeWidth="11" />
+        <path d="M177 51h20c18 0 18 25 0 25h-20v25m19-25 23 25" strokeWidth="11" />
+      </g>
+    </svg>
   );
 }
 
