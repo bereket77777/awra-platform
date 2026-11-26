@@ -83,6 +83,7 @@ const MATCH_PROPOSAL_TIMEOUT_MS = 4000;
 const SEARCH_TIMEOUT_MS = 45000;
 const ICE_DISCONNECT_GRACE_MS = 2500;
 const PARTNER_JOIN_TIMEOUT_MS = 10000;
+const AUTH_SESSION_TIMEOUT_MS = 10000;
 
 const EMPTY_ACTIVITY_DATA = { days: {} };
 
@@ -275,7 +276,6 @@ export default function App() {
   const [authLoading, setAuthLoading] = useState(Boolean(supabase));
   const [profile, setProfile] = useState(null);
   const [profileUserId, setProfileUserId] = useState(null);
-  const [profileLoading, setProfileLoading] = useState(false);
   const [profileError, setProfileError] = useState("");
   const [activitySummary, setActivitySummary] = useState(null);
   const [notifications, setNotifications] = useState([]);
@@ -312,7 +312,6 @@ export default function App() {
     if (!userId) {
       setProfile(null);
       setProfileUserId(null);
-      setProfileLoading(false);
       setProfileError("");
     }
   }
@@ -369,9 +368,6 @@ export default function App() {
   const user = session?.user ?? null;
   const activeUserId = user?.id ?? null;
   const activeProfile = profileUserId === activeUserId ? profile : null;
-  const isProfileLoading = Boolean(
-    activeUserId && (profileUserId !== activeUserId || profileLoading),
-  );
   const activeProfileError = profileUserId === activeUserId ? profileError : "";
   const [activityData, setActivityData] = useState(EMPTY_ACTIVITY_DATA);
   const activityDataRef = useRef(activityData);
@@ -396,6 +392,7 @@ export default function App() {
 
     let active = true;
     let authEventReceived = false;
+    let sessionTimeoutId = null;
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, nextSession) => {
@@ -411,7 +408,14 @@ export default function App() {
 
     async function loadSession() {
       try {
-        const { data, error } = await supabase.auth.getSession();
+        const { data, error } = await Promise.race([
+          supabase.auth.getSession(),
+          new Promise((_, reject) => {
+            sessionTimeoutId = window.setTimeout(() => {
+              reject(new Error("Timed out while checking your session. Please try again."));
+            }, AUTH_SESSION_TIMEOUT_MS);
+          }),
+        ]);
         if (error) throw error;
         if (active && !authEventReceived) {
           activitySummaryUserIdRef.current = data.session?.user?.id ?? null;
@@ -425,6 +429,10 @@ export default function App() {
           setAuthError(error?.message || "Unable to load your session. Please try again.");
         }
       } finally {
+        if (sessionTimeoutId !== null) {
+          window.clearTimeout(sessionTimeoutId);
+          sessionTimeoutId = null;
+        }
         if (active) setAuthLoading(false);
       }
     }
@@ -432,6 +440,7 @@ export default function App() {
     void loadSession();
     return () => {
       active = false;
+      if (sessionTimeoutId !== null) window.clearTimeout(sessionTimeoutId);
       subscription.unsubscribe();
     };
   }, []);
@@ -443,11 +452,9 @@ export default function App() {
     setProfileError("");
     if (!activeUserId || !supabase) {
       setProfileUserId(null);
-      setProfileLoading(false);
       return undefined;
     }
 
-    setProfileLoading(true);
     async function loadProfile() {
       try {
         const { data, error } = await supabase
@@ -475,8 +482,6 @@ export default function App() {
           setProfileUserId(activeUserId);
           setProfileError(error?.message || "Unable to load your profile.");
         }
-      } finally {
-        if (!cancelled) setProfileLoading(false);
       }
     }
 
@@ -1553,8 +1558,6 @@ export default function App() {
       <main className={isIdleDashboard ? "flex min-h-0 flex-1 flex-col py-0" : "my-auto py-10"}>
         {authLoading ? (
           <p role="status" aria-live="polite" className="text-sm text-white/60">Loading...</p>
-        ) : user && isProfileLoading ? (
-          <p role="status" aria-live="polite" className="text-sm text-white/60">Loading your profile...</p>
         ) : !user ? (
           <section
             className={callState === "idle" ? "flex min-h-0 flex-1 flex-col" : "space-y-6"}
