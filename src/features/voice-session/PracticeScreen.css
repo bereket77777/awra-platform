@@ -181,10 +181,6 @@ button.awra-status-pill:hover {
   color: #ffffff;
 }
 
-.awra-activity {
-  position: relative;
-}
-
 .awra-practice {
   display: flex;
   flex: 1;
@@ -235,58 +231,6 @@ button.awra-status-pill:hover {
   align-self: center;
   box-sizing: border-box;
   color: #ffffff;
-}
-
-.awra-practice__waveform {
-  display: flex;
-  height: 28px;
-  align-items: flex-end;
-  justify-content: flex-start;
-  gap: 5px;
-}
-
-.awra-practice__waveform span {
-  display: block;
-  width: 4px;
-  border-radius: 2px;
-  background: #ffffff;
-  opacity: 0.85;
-  animation: awra-wave 2.6s ease-in-out infinite;
-}
-
-.awra-practice__waveform span:nth-child(1) {
-  height: 30%;
-  animation-delay: 0ms;
-}
-
-.awra-practice__waveform span:nth-child(2) {
-  height: 55%;
-  animation-delay: 180ms;
-}
-
-.awra-practice__waveform span:nth-child(3) {
-  height: 100%;
-  animation-delay: 360ms;
-}
-
-.awra-practice__waveform span:nth-child(4) {
-  height: 65%;
-  animation-delay: 540ms;
-}
-
-.awra-practice__waveform span:nth-child(5) {
-  height: 40%;
-  animation-delay: 720ms;
-}
-
-@keyframes awra-wave {
-  0%,
-  100% {
-    transform: scaleY(0.55);
-  }
-  50% {
-    transform: scaleY(1);
-  }
 }
 
 .awra-practice__heading {
@@ -345,14 +289,6 @@ button.awra-status-pill:hover {
   background: #e8e8e8;
 }
 
-.awra-practice__reassurance {
-  margin: 14px 0 0;
-  color: var(--awra-muted);
-  font-size: 12.5px;
-  line-height: 1.5;
-  text-align: center;
-}
-
 .awra-practice__action {
   display: flex;
   width: 100%;
@@ -385,12 +321,6 @@ button.awra-status-pill:hover {
 .awra-popover--profile {
   bottom: calc(100% + 10px);
   right: 0;
-}
-
-.awra-popover--activity {
-  bottom: calc(100% + 10px);
-  left: 0;
-  width: min(286px, calc(100vw - 48px));
 }
 
 .awra-bottom-nav {
@@ -500,72 +430,6 @@ button.awra-status-pill:hover {
   color: var(--awra-muted) !important;
 }
 
-.awra-popover__title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 11px;
-}
-
-.awra-popover__title {
-  margin: 0;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.awra-activity__stats {
-  margin: 0 0 14px;
-}
-
-.awra-activity__stats > div {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-}
-
-.awra-activity__stats dt {
-  color: var(--awra-muted);
-  font-size: 12px;
-}
-
-.awra-activity__stats dd {
-  margin: 0;
-  color: #ffffff;
-  font-size: 13px;
-}
-
-.awra-activity__graph {
-  display: flex;
-  height: 58px;
-  align-items: flex-end;
-  gap: 7px;
-}
-
-.awra-activity__column {
-  display: flex;
-  height: 100%;
-  flex: 1;
-  align-items: flex-end;
-}
-
-.awra-activity__bar {
-  display: block;
-  width: 100%;
-  min-height: 2px;
-  border-radius: 2px 2px 0 0;
-  background: #bfbfbf;
-}
-
-.awra-activity__caption {
-  margin: 7px 0 0;
-  color: var(--awra-faint);
-  font-size: 10px;
-  text-align: right;
-}
-
 .awra-content-view {
   display: flex;
   width: min(100%, 410px);
@@ -644,11 +508,6 @@ button.awra-status-pill:hover {
   color: var(--awra-muted);
   font-size: 11px;
   font-weight: 400;
-}
-
-.awra-activity__session-count {
-  color: var(--awra-faint);
-  font-size: 10px;
 }
 
 .awra-activity__chart-card {
@@ -969,10 +828,5 @@ button.awra-status-pill:hover {
   .awra-screen *::before,
   .awra-screen *::after {
     transition: none !important;
-  }
-
-  .awra-practice__waveform span {
-    animation: none !important;
-    transform: scaleY(0.8) !important;
   }
 }

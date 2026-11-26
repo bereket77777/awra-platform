@@ -102,6 +102,8 @@ function getEmptyActivityWeek() {
   });
 }
 
+const EMPTY_ACTIVITY_WEEK = getEmptyActivityWeek();
+
 function getWeekdayLabel(date) {
   const parsedDate = new Date(`${date}T00:00:00`);
   return Number.isNaN(parsedDate.getTime())
@@ -141,7 +143,7 @@ function ActivityView({ activitySummary, user, profile }) {
   const graphData =
     Array.isArray(activity.last_7_days) && activity.last_7_days.length > 0
       ? activity.last_7_days
-      : getEmptyActivityWeek();
+      : EMPTY_ACTIVITY_WEEK;
   const summaryCards = [
     ["Today", activity.today_minutes ?? 0, "min"],
     ["This Week", activity.this_week_minutes ?? 0, "min"],

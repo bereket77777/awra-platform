@@ -296,6 +296,27 @@ export default function App() {
   const [authSubmitting, setAuthSubmitting] = useState(false);
   const activitySummaryUserIdRef = useRef(null);
 
+  function resetUserScopedState(userId = null) {
+    activitySummaryUserIdRef.current = userId;
+    setActivitySummary(null);
+    setNotifications([]);
+    setNotificationError("");
+    setNotificationPendingIds([]);
+    setTasks([]);
+    setTasksLoading(Boolean(userId));
+    setTaskError("");
+    setTaskTitle("");
+    setTaskSubmitting(false);
+    setPendingTaskIds([]);
+
+    if (!userId) {
+      setProfile(null);
+      setProfileUserId(null);
+      setProfileLoading(false);
+      setProfileError("");
+    }
+  }
+
   const refreshNotifications = useCallback(async (userId) => {
     if (!userId || !supabase) return;
     try {
@@ -382,30 +403,8 @@ export default function App() {
       authEventReceived = true;
       setSession(nextSession);
       const nextUserId = nextSession?.user?.id ?? null;
-      if (activitySummaryUserIdRef.current !== nextUserId) {
-        activitySummaryUserIdRef.current = nextUserId;
-        setActivitySummary(null);
-        setNotifications([]);
-        setNotificationError("");
-        setNotificationPendingIds([]);
-        setTasks([]);
-        setTasksLoading(Boolean(nextUserId));
-        setTaskError("");
-        setTaskTitle("");
-        setTaskSubmitting(false);
-        setPendingTaskIds([]);
-      }
-      if (!nextSession?.user?.id) {
-        setProfile(null);
-        setProfileUserId(null);
-        setProfileLoading(false);
-        setProfileError("");
-        setTasks([]);
-        setTasksLoading(false);
-        setNotifications([]);
-        setTaskSubmitting(false);
-        setNotificationPendingIds([]);
-        setPendingTaskIds([]);
+      if (activitySummaryUserIdRef.current !== nextUserId || !nextUserId) {
+        resetUserScopedState(nextUserId);
       }
       setAuthError("");
     });
@@ -553,7 +552,7 @@ export default function App() {
     return () => {
       cancelled = true;
     };
-  }, [activeUserId, handleSessionFinished]);
+  }, [activeUserId]);
 
   async function addTask(event) {
     event.preventDefault();
@@ -1012,19 +1011,7 @@ export default function App() {
       }
     }
     setSession(null);
-    setProfile(null);
-    setProfileUserId(null);
-    activitySummaryUserIdRef.current = null;
-    setActivitySummary(null);
-    setNotifications([]);
-    setNotificationError("");
-    setNotificationPendingIds([]);
-    setTasks([]);
-    setTasksLoading(false);
-    setTaskTitle("");
-    setTaskSubmitting(false);
-    setTaskError("");
-    setPendingTaskIds([]);
+    resetUserScopedState();
     setAuthMode("signin");
     setFullName("");
     setEnglishLevel("");
@@ -1275,7 +1262,6 @@ export default function App() {
             setRemainingSeconds(600);
             session.practiceStartedAt = Date.now();
             session.activityRecordedSeconds = 0;
-            session.muted = false;
             setCallState("connected");
             if (peerConnection.connectionState === "connected") {
               void startSpeakingSession(session);
@@ -1516,7 +1502,6 @@ export default function App() {
   function toggleMute() {
     const nextMuted = !muted;
     const session = sessionRef.current;
-    if (session) session.muted = nextMuted;
     session?.localStream?.getAudioTracks().forEach((track) => {
       track.enabled = !nextMuted;
     });
