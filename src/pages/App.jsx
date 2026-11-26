@@ -1,7 +1,7 @@
 ﻿import { useCallback, useEffect, useRef, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-import PracticeScreen from "./PracticeScreen";
-import "./PracticeScreen.css";
+import AwraButton from "../components/AwraButton.jsx";
+import PracticeScreen from "../features/voice-session/PracticeScreen.jsx";
+import supabase from "../lib/supabase.js";
 
 /**
  * AWRA — this pass fixes (see chat for the full writeup):
@@ -61,17 +61,6 @@ const VALID_VIP_IDS = new Set(
     .filter(Boolean),
 );
 */
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabaseOptions =
-  import.meta.env.DEV && import.meta.env.VITE_TAB_SESSIONS === "1"
-    ? { auth: { storage: window.sessionStorage, storageKey: "awra-dev-auth" } }
-    : undefined;
-const supabase =
-  supabaseUrl && supabaseAnonKey
-    ? createClient(supabaseUrl, supabaseAnonKey, supabaseOptions)
-    : null;
 
 // TURN is optional at the env level but effectively required in production:
 // STUN alone cannot traverse symmetric NAT / many campus firewalls, which is
@@ -278,16 +267,6 @@ function disposeSession(session, audioRef) {
   if (audioRef.current) audioRef.current.srcObject = null;
   removeChannel(session.lobbyChannel);
   removeChannel(session.roomChannel);
-}
-
-function AwraButton({ variant = "secondary", className = "", type = "button", ...props }) {
-  const base =
-    "w-full rounded-md px-5 py-3 font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-50";
-  const variantClass =
-    variant === "primary"
-      ? "bg-white text-black hover:bg-white/85"
-      : "border border-white text-white hover:bg-white hover:text-black";
-  return <button type={type} className={`${base} ${variantClass} ${className}`} {...props} />;
 }
 
 export default function App() {

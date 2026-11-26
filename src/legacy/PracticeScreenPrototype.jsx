@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import "./PracticeScreen.css";
+import "./PracticeScreenPrototype.css";
 
 const LEVELS = ["Beginner", "Intermediate", "Advanced"];
 

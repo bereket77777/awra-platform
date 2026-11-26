@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "./PracticeScreen.css";
 
 function ProfileIcon() {
   return (
